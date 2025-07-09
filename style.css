@@ -24,12 +24,12 @@ main {
 
 header h1 {
   font-size: 2rem;
-  color: #00FFCC;
+  color: #3FC1C9;
   margin: 0;
 }
 
 header .tagline {
-  color: #FF00CC;
+  color: #C77DFF;
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
@@ -46,7 +46,7 @@ section.links {
 }
 
 section.links a {
-  color: #00FFCC;
+  color: #3FC1C9;
   text-decoration: none;
   margin-bottom: 1rem;
   transition: color 0.3s ease;
