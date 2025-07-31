@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Quality of Money</title>
+  <style>
+    :root {
+      --bg: #fdfdfd;
+      --text: #1a1a1a;
+      --accent: #0055ff;
+      --muted: #777;
+    }
+
+    [data-theme='dark'] {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --accent: #3399ff;
+      --muted: #aaa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: var(--muted);
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    ol {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+
+    ul li {
+      list-style: disc;
+      margin-left: 1.2rem;
+    }
+
+    blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    code {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .principle {
+      background: rgba(0, 85, 255, 0.05);
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 5px;
+    }
+
+    .toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--bg);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #toTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 0.75rem 1rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <button class="toggle" onclick="toggleTheme()">☀️ / 🌙</button>
+  <button id="toTopBtn" onclick="scrollToTop()">↑</button>
+
+  <main>
+    <!-- 🧠 Paste the full article content here as-is (from <article>...</article>) -->
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      document.querySelector('.toggle').textContent = newTheme === 'dark' ? '🌙 / ☀️' : '☀️ / 🌙';
+    }
+
+    window.onscroll = function () {
+      const btn = document.getElementById('toTopBtn');
+      btn.style.display = document.documentElement.scrollTop > 400 ? 'block' : 'none';
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
