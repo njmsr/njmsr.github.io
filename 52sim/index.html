@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>July 2026 &mdash; All Four Machines</title>
+<style>
+  :root {
+    --bg:#0e0f0d; --ink:#e8e6df; --ink-dim:#9a9890; --ink-faint:#65645e;
+    --amber:#d4a24e; --amber-bright:#f0c674; --amber-dim:#3a2f1a;
+    --slate:#6f8ea6; --slate-dim:#2a3640; --rule:#2a2c27;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:var(--bg);
+    background-image:radial-gradient(ellipse 120% 80% at 50% -10%, #1a1c17 0%, transparent 55%);
+    color:var(--ink); font-family:Georgia,'Times New Roman',serif; font-size:17px;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .mono, .doc-tag, .subhead, .ctl-label, .ctl-btn, .readout, .dayhead, .cell, .blocks, .vlabel, .colophon {
+    font-family:'SF Mono',ui-monospace,Menlo,'Courier New',monospace;
+  }
+  .wrap { max-width:700px; margin:0 auto; padding:2.2rem .9rem 4rem; }
+  .doc-tag { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:12px; }
+  .masthead { border-bottom:2px solid var(--amber); padding-bottom:16px; margin-bottom:20px; }
+  h1 { font-weight:500; font-size:32px; line-height:1.05; }
+  h1 em { color:var(--amber-bright); }
+  .subhead { font-size:12.5px; color:var(--ink-dim); margin-top:8px; line-height:1.6; }
+
+  /* hidden radio inputs (must precede .wrap as siblings) */
+  input.sw { position:absolute; opacity:0; pointer-events:none; }
+
+  .controls { display:flex; gap:28px; flex-wrap:wrap; margin-bottom:6px; }
+  .ctl-group { margin-bottom:14px; }
+  .ctl-label { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+  .ctl-buttons { display:flex; gap:8px; }
+  label.ctl-btn {
+    display:inline-block; font-size:13px; font-weight:600;
+    padding:8px 14px; border-radius:3px; cursor:pointer;
+    border:1px solid var(--rule); color:var(--ink-faint);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  /* active label states */
+  #v1n:checked ~ .wrap label[for=v1n] { border-color:var(--amber-bright); background:var(--amber-dim); color:var(--amber-bright); }
+  #v1s:checked ~ .wrap label[for=v1s] { border-color:var(--slate); background:var(--slate-dim); color:var(--slate); }
+  #v2n:checked ~ .wrap label[for=v2n] { border-color:var(--amber-bright); background:var(--amber-dim); color:var(--amber-bright); }
+  #v2s:checked ~ .wrap label[for=v2s] { border-color:var(--slate); background:var(--slate-dim); color:var(--slate); }
+
+  /* config visibility */
+  .cfg { display:none; }
+  #v1n:checked ~ #v1s ~ #v2n:checked ~ .wrap .cfg-nn { display:block; }
+  #v1n:checked ~ #v1s ~ #v2s:checked ~ .wrap .cfg-ns { display:block; }
+  #v1s:checked ~ #v2n:checked ~ .wrap .cfg-sn { display:block; }
+  #v1s:checked ~ #v2s:checked ~ .wrap .cfg-ss { display:block; }
+
+  .readout { font-size:12px; color:var(--ink-dim); margin-bottom:14px; line-height:1.9; }
+  .rn { color:var(--amber-bright); font-weight:600; }
+  .rs { color:var(--slate); font-weight:600; }
+
+  .cal { border:1px solid var(--rule); border-radius:3px; overflow:hidden; }
+  .grid { display:grid; grid-template-columns:repeat(7,1fr); }
+  .dayhead {
+    font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); text-align:center; padding:7px 0 6px;
+    border-bottom:1px solid var(--rule); background:rgba(255,255,255,.012);
+  }
+  .cell { min-height:56px; padding:5px 4px; border-top:1px solid var(--rule); }
+  .cell .date { font-size:11px; color:var(--ink-dim); }
+  .cell .who { display:block; font-size:13px; font-weight:600; margin-top:7px; text-align:center; }
+  .cell.n { background:var(--amber-dim); } .cell.n .who { color:var(--amber-bright); }
+  .cell.s { background:var(--slate-dim); } .cell.s .who { color:var(--slate); }
+  .cell.out { opacity:.32; }
+
+  .blocks { margin-top:22px; font-size:12.5px; color:var(--ink-dim); line-height:2; }
+  .blocks b { color:var(--ink); font-weight:500; }
+
+  .note {
+    margin-top:30px; padding:18px; border:1px solid var(--rule); border-left:3px solid var(--amber);
+    background:rgba(212,162,78,.04); font-size:16px; line-height:1.6;
+  }
+  .vlabel { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--amber); margin-bottom:8px; display:block; }
+  .note p + p { margin-top:10px; }
+  .note em { color:var(--amber-bright); }
+
+  .colophon { margin-top:36px; padding-top:16px; border-top:2px solid var(--amber); font-size:11px; color:var(--ink-faint); text-align:center; line-height:1.8; }
+  .colophon .trial { color:var(--amber); letter-spacing:.2em; display:block; margin-top:8px; }
+</style>
+</head>
+<body>
+
+<input class="sw" type="radio" name="v1" id="v1n">
+<input class="sw" type="radio" name="v1" id="v1s" checked>
+<input class="sw" type="radio" name="v2" id="v2n" checked>
+<input class="sw" type="radio" name="v2" id="v2s">
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="doc-tag">Corpus // Schedule Simulator</span>
+    <h1>July 2026 &mdash; <em>All Four Machines</em></h1>
+    <p class="subhead">Two variables, four configurations. Tap the switches; the month changes.<br>No scripts &mdash; works anywhere, including iOS preview.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl-group">
+      <div class="ctl-label">Variable 1 &mdash; Mon/Tue belongs to</div>
+      <div class="ctl-buttons">
+        <label class="ctl-btn" for="v1n">Nathan (S gets Wed/Thu)</label>
+        <label class="ctl-btn" for="v1s">Stefani (N gets Wed/Thu)</label>
+      </div>
+    </div>
+    <div class="ctl-group">
+      <div class="ctl-label">Variable 2 &mdash; First weekend (Jul 3&ndash;5)</div>
+      <div class="ctl-buttons">
+        <label class="ctl-btn" for="v2n">Nathan</label>
+        <label class="ctl-btn" for="v2s">Stefani</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="cfg cfg-nn">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 15</span> &middot; <span class="rs">Stefani: 16</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Nathan&rsquo;s 5-run: Fri&rarr;Tue</div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell n out"><span class="date">Jun 29</span><span class="who">N</span></div><div class="cell n out"><span class="date">Jun 30</span><span class="who">N</span></div><div class="cell s"><span class="date">1</span><span class="who">S</span></div><div class="cell s"><span class="date">2</span><span class="who">S</span></div><div class="cell n"><span class="date">3</span><span class="who">N</span></div><div class="cell n"><span class="date">4</span><span class="who">N</span></div><div class="cell n"><span class="date">5</span><span class="who">N</span></div><div class="cell n"><span class="date">6</span><span class="who">N</span></div><div class="cell n"><span class="date">7</span><span class="who">N</span></div><div class="cell s"><span class="date">8</span><span class="who">S</span></div><div class="cell s"><span class="date">9</span><span class="who">S</span></div><div class="cell s"><span class="date">10</span><span class="who">S</span></div><div class="cell s"><span class="date">11</span><span class="who">S</span></div><div class="cell s"><span class="date">12</span><span class="who">S</span></div><div class="cell n"><span class="date">13</span><span class="who">N</span></div><div class="cell n"><span class="date">14</span><span class="who">N</span></div><div class="cell s"><span class="date">15</span><span class="who">S</span></div><div class="cell s"><span class="date">16</span><span class="who">S</span></div><div class="cell n"><span class="date">17</span><span class="who">N</span></div><div class="cell n"><span class="date">18</span><span class="who">N</span></div><div class="cell n"><span class="date">19</span><span class="who">N</span></div><div class="cell n"><span class="date">20</span><span class="who">N</span></div><div class="cell n"><span class="date">21</span><span class="who">N</span></div><div class="cell s"><span class="date">22</span><span class="who">S</span></div><div class="cell s"><span class="date">23</span><span class="who">S</span></div><div class="cell s"><span class="date">24</span><span class="who">S</span></div><div class="cell s"><span class="date">25</span><span class="who">S</span></div><div class="cell s"><span class="date">26</span><span class="who">S</span></div><div class="cell n"><span class="date">27</span><span class="who">N</span></div><div class="cell n"><span class="date">28</span><span class="who">N</span></div><div class="cell s"><span class="date">29</span><span class="who">S</span></div><div class="cell s"><span class="date">30</span><span class="who">S</span></div><div class="cell n"><span class="date">31</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 1</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 2</span><span class="who">N</span></div></div></div>
+    <div class="blocks"><b>How the blocks land:</b><br>Jul 1&ndash;Jul 2 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 3&ndash;Jul 7 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 8&ndash;Jul 12 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 13&ndash;Jul 14 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 15&ndash;Jul 16 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 17&ndash;Jul 21 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 22&ndash;Jul 26 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 27&ndash;Jul 28 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 29&ndash;Jul 30 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 31&ndash;Aug 2 &nbsp;<span class="rn">Nathan, 3</span><br></div>
+  </div>
+  <div class="cfg cfg-ns">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 14</span> &middot; <span class="rs">Stefani: 17</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Nathan&rsquo;s 5-run: Fri&rarr;Tue</div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell n out"><span class="date">Jun 29</span><span class="who">N</span></div><div class="cell n out"><span class="date">Jun 30</span><span class="who">N</span></div><div class="cell s"><span class="date">1</span><span class="who">S</span></div><div class="cell s"><span class="date">2</span><span class="who">S</span></div><div class="cell s"><span class="date">3</span><span class="who">S</span></div><div class="cell s"><span class="date">4</span><span class="who">S</span></div><div class="cell s"><span class="date">5</span><span class="who">S</span></div><div class="cell n"><span class="date">6</span><span class="who">N</span></div><div class="cell n"><span class="date">7</span><span class="who">N</span></div><div class="cell s"><span class="date">8</span><span class="who">S</span></div><div class="cell s"><span class="date">9</span><span class="who">S</span></div><div class="cell n"><span class="date">10</span><span class="who">N</span></div><div class="cell n"><span class="date">11</span><span class="who">N</span></div><div class="cell n"><span class="date">12</span><span class="who">N</span></div><div class="cell n"><span class="date">13</span><span class="who">N</span></div><div class="cell n"><span class="date">14</span><span class="who">N</span></div><div class="cell s"><span class="date">15</span><span class="who">S</span></div><div class="cell s"><span class="date">16</span><span class="who">S</span></div><div class="cell s"><span class="date">17</span><span class="who">S</span></div><div class="cell s"><span class="date">18</span><span class="who">S</span></div><div class="cell s"><span class="date">19</span><span class="who">S</span></div><div class="cell n"><span class="date">20</span><span class="who">N</span></div><div class="cell n"><span class="date">21</span><span class="who">N</span></div><div class="cell s"><span class="date">22</span><span class="who">S</span></div><div class="cell s"><span class="date">23</span><span class="who">S</span></div><div class="cell n"><span class="date">24</span><span class="who">N</span></div><div class="cell n"><span class="date">25</span><span class="who">N</span></div><div class="cell n"><span class="date">26</span><span class="who">N</span></div><div class="cell n"><span class="date">27</span><span class="who">N</span></div><div class="cell n"><span class="date">28</span><span class="who">N</span></div><div class="cell s"><span class="date">29</span><span class="who">S</span></div><div class="cell s"><span class="date">30</span><span class="who">S</span></div><div class="cell s"><span class="date">31</span><span class="who">S</span></div><div class="cell s out"><span class="date">Aug 1</span><span class="who">S</span></div><div class="cell s out"><span class="date">Aug 2</span><span class="who">S</span></div></div></div>
+    <div class="blocks"><b>How the blocks land:</b><br>Jul 1&ndash;Jul 5 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 6&ndash;Jul 7 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 8&ndash;Jul 9 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 10&ndash;Jul 14 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 15&ndash;Jul 19 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 20&ndash;Jul 21 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 22&ndash;Jul 23 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 24&ndash;Jul 28 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 29&ndash;Aug 2 &nbsp;<span class="rs">Stefani, 5 in a row</span><br></div>
+  </div>
+  <div class="cfg cfg-sn">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 17</span> &middot; <span class="rs">Stefani: 14</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Nathan&rsquo;s 5-run: Wed&rarr;Sun</div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell s out"><span class="date">Jun 29</span><span class="who">S</span></div><div class="cell s out"><span class="date">Jun 30</span><span class="who">S</span></div><div class="cell n"><span class="date">1</span><span class="who">N</span></div><div class="cell n"><span class="date">2</span><span class="who">N</span></div><div class="cell n"><span class="date">3</span><span class="who">N</span></div><div class="cell n"><span class="date">4</span><span class="who">N</span></div><div class="cell n"><span class="date">5</span><span class="who">N</span></div><div class="cell s"><span class="date">6</span><span class="who">S</span></div><div class="cell s"><span class="date">7</span><span class="who">S</span></div><div class="cell n"><span class="date">8</span><span class="who">N</span></div><div class="cell n"><span class="date">9</span><span class="who">N</span></div><div class="cell s"><span class="date">10</span><span class="who">S</span></div><div class="cell s"><span class="date">11</span><span class="who">S</span></div><div class="cell s"><span class="date">12</span><span class="who">S</span></div><div class="cell s"><span class="date">13</span><span class="who">S</span></div><div class="cell s"><span class="date">14</span><span class="who">S</span></div><div class="cell n"><span class="date">15</span><span class="who">N</span></div><div class="cell n"><span class="date">16</span><span class="who">N</span></div><div class="cell n"><span class="date">17</span><span class="who">N</span></div><div class="cell n"><span class="date">18</span><span class="who">N</span></div><div class="cell n"><span class="date">19</span><span class="who">N</span></div><div class="cell s"><span class="date">20</span><span class="who">S</span></div><div class="cell s"><span class="date">21</span><span class="who">S</span></div><div class="cell n"><span class="date">22</span><span class="who">N</span></div><div class="cell n"><span class="date">23</span><span class="who">N</span></div><div class="cell s"><span class="date">24</span><span class="who">S</span></div><div class="cell s"><span class="date">25</span><span class="who">S</span></div><div class="cell s"><span class="date">26</span><span class="who">S</span></div><div class="cell s"><span class="date">27</span><span class="who">S</span></div><div class="cell s"><span class="date">28</span><span class="who">S</span></div><div class="cell n"><span class="date">29</span><span class="who">N</span></div><div class="cell n"><span class="date">30</span><span class="who">N</span></div><div class="cell n"><span class="date">31</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 1</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 2</span><span class="who">N</span></div></div></div>
+    <div class="blocks"><b>How the blocks land:</b><br>Jul 1&ndash;Jul 5 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 6&ndash;Jul 7 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 8&ndash;Jul 9 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 10&ndash;Jul 14 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 15&ndash;Jul 19 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 20&ndash;Jul 21 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 22&ndash;Jul 23 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 24&ndash;Jul 28 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 29&ndash;Aug 2 &nbsp;<span class="rn">Nathan, 5 in a row</span><br></div>
+  </div>
+  <div class="cfg cfg-ss">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 16</span> &middot; <span class="rs">Stefani: 15</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Nathan&rsquo;s 5-run: Wed&rarr;Sun</div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell s out"><span class="date">Jun 29</span><span class="who">S</span></div><div class="cell s out"><span class="date">Jun 30</span><span class="who">S</span></div><div class="cell n"><span class="date">1</span><span class="who">N</span></div><div class="cell n"><span class="date">2</span><span class="who">N</span></div><div class="cell s"><span class="date">3</span><span class="who">S</span></div><div class="cell s"><span class="date">4</span><span class="who">S</span></div><div class="cell s"><span class="date">5</span><span class="who">S</span></div><div class="cell s"><span class="date">6</span><span class="who">S</span></div><div class="cell s"><span class="date">7</span><span class="who">S</span></div><div class="cell n"><span class="date">8</span><span class="who">N</span></div><div class="cell n"><span class="date">9</span><span class="who">N</span></div><div class="cell n"><span class="date">10</span><span class="who">N</span></div><div class="cell n"><span class="date">11</span><span class="who">N</span></div><div class="cell n"><span class="date">12</span><span class="who">N</span></div><div class="cell s"><span class="date">13</span><span class="who">S</span></div><div class="cell s"><span class="date">14</span><span class="who">S</span></div><div class="cell n"><span class="date">15</span><span class="who">N</span></div><div class="cell n"><span class="date">16</span><span class="who">N</span></div><div class="cell s"><span class="date">17</span><span class="who">S</span></div><div class="cell s"><span class="date">18</span><span class="who">S</span></div><div class="cell s"><span class="date">19</span><span class="who">S</span></div><div class="cell s"><span class="date">20</span><span class="who">S</span></div><div class="cell s"><span class="date">21</span><span class="who">S</span></div><div class="cell n"><span class="date">22</span><span class="who">N</span></div><div class="cell n"><span class="date">23</span><span class="who">N</span></div><div class="cell n"><span class="date">24</span><span class="who">N</span></div><div class="cell n"><span class="date">25</span><span class="who">N</span></div><div class="cell n"><span class="date">26</span><span class="who">N</span></div><div class="cell s"><span class="date">27</span><span class="who">S</span></div><div class="cell s"><span class="date">28</span><span class="who">S</span></div><div class="cell n"><span class="date">29</span><span class="who">N</span></div><div class="cell n"><span class="date">30</span><span class="who">N</span></div><div class="cell s"><span class="date">31</span><span class="who">S</span></div><div class="cell s out"><span class="date">Aug 1</span><span class="who">S</span></div><div class="cell s out"><span class="date">Aug 2</span><span class="who">S</span></div></div></div>
+    <div class="blocks"><b>How the blocks land:</b><br>Jul 1&ndash;Jul 2 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 3&ndash;Jul 7 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 8&ndash;Jul 12 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 13&ndash;Jul 14 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 15&ndash;Jul 16 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 17&ndash;Jul 21 &nbsp;<span class="rs">Stefani, 5 in a row</span><br>Jul 22&ndash;Jul 26 &nbsp;<span class="rn">Nathan, 5 in a row</span><br>Jul 27&ndash;Jul 28 &nbsp;<span class="rs">Stefani, 2</span><br>Jul 29&ndash;Jul 30 &nbsp;<span class="rn">Nathan, 2</span><br>Jul 31&ndash;Aug 2 &nbsp;<span class="rs">Stefani, 3</span><br></div>
+  </div>
+  <div class="note">
+    <span class="vlabel">Reading the variables</span>
+    <p>Variable 1 decides the <em>shape</em> of each parent&rsquo;s 5-run: the Wed/Thu holder gets Wed&rarr;Sun (the weekend lands inside their run); the Mon/Tue holder gets Fri&rarr;Tue (their run wraps the weekend into the next week).</p>
+    <p>Variable 2 decides the <em>phase</em> &mdash; which weeks are whose. It changes nothing structural; it only slides the alternation by one week.</p>
+    <p>In every configuration: Saturdays split evenly, handoff seams stay fixed (Sun&rarr;Mon, Tue&rarr;Wed, Thu&rarr;Fri on swap weeks), and nobody negotiates anything after the two switches are set.</p>
+  </div>
+
+  <footer class="colophon">
+    Filed by the corpus,<br>
+    on behalf of clarity itself.
+    <span class="trial">THE TRIAL CONTINUES</span>
+  </footer>
+
+</div>
+</body>
+</html>
