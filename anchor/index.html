@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Anchored Split &mdash; July 2026</title>
+<style>
+  :root {
+    --bg:#0e0f0d; --ink:#e8e6df; --ink-dim:#9a9890; --ink-faint:#65645e;
+    --amber:#d4a24e; --amber-bright:#f0c674; --amber-dim:#3a2f1a;
+    --slate:#6f8ea6; --slate-dim:#2a3640; --rule:#2a2c27;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:var(--bg);
+    background-image:radial-gradient(ellipse 120% 80% at 50% -10%, #1a1c17 0%, transparent 55%);
+    color:var(--ink); font-family:Georgia,'Times New Roman',serif; font-size:17px;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .mono, .doc-tag, .subhead, .ctl-label, .ctl-btn, .readout, .dayhead, .cell, .blocks, .vlabel, .colophon {
+    font-family:'SF Mono',ui-monospace,Menlo,'Courier New',monospace;
+  }
+  .wrap { max-width:700px; margin:0 auto; padding:2.2rem .9rem 4rem; }
+  .doc-tag { font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:12px; }
+  .masthead { border-bottom:2px solid var(--amber); padding-bottom:16px; margin-bottom:20px; }
+  h1 { font-weight:500; font-size:32px; line-height:1.05; }
+  h1 em { color:var(--amber-bright); }
+  .subhead { font-size:12.5px; color:var(--ink-dim); margin-top:8px; line-height:1.6; }
+
+  /* hidden radio inputs (must precede .wrap as siblings) */
+  input.sw { position:absolute; opacity:0; pointer-events:none; }
+
+  .controls { display:flex; gap:28px; flex-wrap:wrap; margin-bottom:6px; }
+  .ctl-group { margin-bottom:14px; }
+  .ctl-label { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+  .ctl-buttons { display:flex; gap:8px; }
+  label.ctl-btn {
+    display:inline-block; font-size:13px; font-weight:600;
+    padding:8px 14px; border-radius:3px; cursor:pointer;
+    border:1px solid var(--rule); color:var(--ink-faint);
+    -webkit-user-select:none; user-select:none;
+  }
+
+  /* active label states */
+  #v1n:checked ~ .wrap label[for=v1n] { border-color:var(--amber-bright); background:var(--amber-dim); color:var(--amber-bright); }
+  #v1s:checked ~ .wrap label[for=v1s] { border-color:var(--slate); background:var(--slate-dim); color:var(--slate); }
+
+  /* config visibility */
+  .cfg { display:none; }
+  #v1n:checked ~ .wrap .cfg-n { display:block; }
+  #v1s:checked ~ .wrap .cfg-s { display:block; }
+
+  .readout { font-size:12px; color:var(--ink-dim); margin-bottom:14px; line-height:1.9; }
+  .rn { color:var(--amber-bright); font-weight:600; }
+  .rs { color:var(--slate); font-weight:600; }
+
+  .cal { border:1px solid var(--rule); border-radius:3px; overflow:hidden; }
+  .grid { display:grid; grid-template-columns:repeat(7,1fr); }
+  .dayhead {
+    font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); text-align:center; padding:7px 0 6px;
+    border-bottom:1px solid var(--rule); background:rgba(255,255,255,.012);
+  }
+  .cell { min-height:56px; padding:5px 4px; border-top:1px solid var(--rule); }
+  .cell .date { font-size:11px; color:var(--ink-dim); }
+  .cell .who { display:block; font-size:13px; font-weight:600; margin-top:7px; text-align:center; }
+  .cell.n { background:var(--amber-dim); } .cell.n .who { color:var(--amber-bright); }
+  .cell.s { background:var(--slate-dim); } .cell.s .who { color:var(--slate); }
+  .cell.out { opacity:.32; }
+
+  .note {
+    margin-top:30px; padding:18px; border:1px solid var(--rule); border-left:3px solid var(--amber);
+    background:rgba(212,162,78,.04); font-size:16px; line-height:1.6;
+  }
+  .vlabel { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--amber); margin-bottom:8px; display:block; }
+  .note p + p { margin-top:10px; }
+  .note em { color:var(--amber-bright); }
+
+  .colophon { margin-top:36px; padding-top:16px; border-top:2px solid var(--amber); font-size:11px; color:var(--ink-faint); text-align:center; line-height:1.8; }
+</style>
+</head>
+<body>
+
+<input class="sw" type="radio" name="v1" id="v1n" checked>
+<input class="sw" type="radio" name="v1" id="v1s">
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="doc-tag">Schedule Simulator</span>
+    <h1>The <em>Anchored Split</em></h1>
+    <p class="subhead">Fixed weekdays, alternating Sunday. One variable: which parent opens the Sunday rotation.<br>No scripts &mdash; works anywhere, including iOS preview.</p>
+  </header>
+
+  <div class="controls">
+    <div class="ctl-group">
+      <div class="ctl-label">Variable &mdash; Sunday rotation opens with</div>
+      <div class="ctl-buttons">
+        <label class="ctl-btn" for="v1n">Nathan</label>
+        <label class="ctl-btn" for="v1s">Stefani</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="cfg cfg-n">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 16</span> &middot; <span class="rs">Stefani: 15</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 4</span> &middot; <span class="rs">S: 0</span> &nbsp;|&nbsp; July Sundays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Sunday opens: <span class="rn">Nathan</span></div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell s out"><span class="date">Jun 29</span><span class="who">S</span></div><div class="cell s out"><span class="date">Jun 30</span><span class="who">S</span></div><div class="cell n"><span class="date">1</span><span class="who">N</span></div><div class="cell s"><span class="date">2</span><span class="who">S</span></div><div class="cell n"><span class="date">3</span><span class="who">N</span></div><div class="cell n"><span class="date">4</span><span class="who">N</span></div><div class="cell n"><span class="date">5</span><span class="who">N</span></div><div class="cell s"><span class="date">6</span><span class="who">S</span></div><div class="cell s"><span class="date">7</span><span class="who">S</span></div><div class="cell n"><span class="date">8</span><span class="who">N</span></div><div class="cell s"><span class="date">9</span><span class="who">S</span></div><div class="cell n"><span class="date">10</span><span class="who">N</span></div><div class="cell n"><span class="date">11</span><span class="who">N</span></div><div class="cell s"><span class="date">12</span><span class="who">S</span></div><div class="cell s"><span class="date">13</span><span class="who">S</span></div><div class="cell s"><span class="date">14</span><span class="who">S</span></div><div class="cell n"><span class="date">15</span><span class="who">N</span></div><div class="cell s"><span class="date">16</span><span class="who">S</span></div><div class="cell n"><span class="date">17</span><span class="who">N</span></div><div class="cell n"><span class="date">18</span><span class="who">N</span></div><div class="cell n"><span class="date">19</span><span class="who">N</span></div><div class="cell s"><span class="date">20</span><span class="who">S</span></div><div class="cell s"><span class="date">21</span><span class="who">S</span></div><div class="cell n"><span class="date">22</span><span class="who">N</span></div><div class="cell s"><span class="date">23</span><span class="who">S</span></div><div class="cell n"><span class="date">24</span><span class="who">N</span></div><div class="cell n"><span class="date">25</span><span class="who">N</span></div><div class="cell s"><span class="date">26</span><span class="who">S</span></div><div class="cell s"><span class="date">27</span><span class="who">S</span></div><div class="cell s"><span class="date">28</span><span class="who">S</span></div><div class="cell n"><span class="date">29</span><span class="who">N</span></div><div class="cell s"><span class="date">30</span><span class="who">S</span></div><div class="cell n"><span class="date">31</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 1</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 2</span><span class="who">N</span></div></div></div>
+  </div>
+
+  <div class="cfg cfg-s">
+    <div class="readout">July days &mdash; <span class="rn">Nathan: 16</span> &middot; <span class="rs">Stefani: 15</span> &nbsp;|&nbsp; July Saturdays &mdash; <span class="rn">N: 4</span> &middot; <span class="rs">S: 0</span> &nbsp;|&nbsp; July Sundays &mdash; <span class="rn">N: 2</span> &middot; <span class="rs">S: 2</span> &nbsp;|&nbsp; Sunday opens: <span class="rs">Stefani</span></div>
+    <div class="cal"><div class="grid"><div class="dayhead">Mon</div><div class="dayhead">Tue</div><div class="dayhead">Wed</div><div class="dayhead">Thu</div><div class="dayhead">Fri</div><div class="dayhead">Sat</div><div class="dayhead">Sun</div><div class="cell s out"><span class="date">Jun 29</span><span class="who">S</span></div><div class="cell s out"><span class="date">Jun 30</span><span class="who">S</span></div><div class="cell n"><span class="date">1</span><span class="who">N</span></div><div class="cell s"><span class="date">2</span><span class="who">S</span></div><div class="cell n"><span class="date">3</span><span class="who">N</span></div><div class="cell n"><span class="date">4</span><span class="who">N</span></div><div class="cell s"><span class="date">5</span><span class="who">S</span></div><div class="cell s"><span class="date">6</span><span class="who">S</span></div><div class="cell s"><span class="date">7</span><span class="who">S</span></div><div class="cell n"><span class="date">8</span><span class="who">N</span></div><div class="cell s"><span class="date">9</span><span class="who">S</span></div><div class="cell n"><span class="date">10</span><span class="who">N</span></div><div class="cell n"><span class="date">11</span><span class="who">N</span></div><div class="cell n"><span class="date">12</span><span class="who">N</span></div><div class="cell s"><span class="date">13</span><span class="who">S</span></div><div class="cell s"><span class="date">14</span><span class="who">S</span></div><div class="cell n"><span class="date">15</span><span class="who">N</span></div><div class="cell s"><span class="date">16</span><span class="who">S</span></div><div class="cell n"><span class="date">17</span><span class="who">N</span></div><div class="cell n"><span class="date">18</span><span class="who">N</span></div><div class="cell s"><span class="date">19</span><span class="who">S</span></div><div class="cell s"><span class="date">20</span><span class="who">S</span></div><div class="cell s"><span class="date">21</span><span class="who">S</span></div><div class="cell n"><span class="date">22</span><span class="who">N</span></div><div class="cell s"><span class="date">23</span><span class="who">S</span></div><div class="cell n"><span class="date">24</span><span class="who">N</span></div><div class="cell n"><span class="date">25</span><span class="who">N</span></div><div class="cell n"><span class="date">26</span><span class="who">N</span></div><div class="cell s"><span class="date">27</span><span class="who">S</span></div><div class="cell s"><span class="date">28</span><span class="who">S</span></div><div class="cell n"><span class="date">29</span><span class="who">N</span></div><div class="cell s"><span class="date">30</span><span class="who">S</span></div><div class="cell n"><span class="date">31</span><span class="who">N</span></div><div class="cell n out"><span class="date">Aug 1</span><span class="who">N</span></div><div class="cell s out"><span class="date">Aug 2</span><span class="who">S</span></div></div></div>
+  </div>
+
+  <div class="note">
+    <span class="vlabel">How it works</span>
+    <p>Weekday roles are fixed every week: <span class="rs">Stefani</span> takes Mon, Tue, Thu; <span class="rn">Nathan</span> takes Wed, Fri, Sat. The single variable sets which parent opens the Sunday rotation; Sundays alternate from there.</p>
+    <p>The longest stretch either parent holds is three days &mdash; the run the Sunday attaches to. Pickup and drop-off times are set separately.</p>
+  </div>
+
+  <footer class="colophon">
+    One variable &middot; two phases &middot; weekdays fixed
+  </footer>
+
+</div>
+</body>
+</html>
